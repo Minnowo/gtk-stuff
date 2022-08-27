@@ -14,7 +14,11 @@ outputfile  = nyah.exe
 
 maincpp: main.cpp
 
-		g++ ${gtkflags1} ${magickflags1} ${errflags} -o ${outputfile} ${inputfile} ${gtkflags2} ${magickflags2}
+		g++ ${gtkflags1} ${magickflags1} -o ${outputfile} ${inputfile} ${gtkflags2} ${magickflags2}
+
+		# haahahahhh holy fuck, to get dpi aware on windows you gotta use developer powershell for vs
+		# and run this command, passing the app.manifest to the exe, it then works 
+		# mt.exe -manifest app.manifest -outputresource:nyah.exe;1
 
 clean:
 		rm *.exe 

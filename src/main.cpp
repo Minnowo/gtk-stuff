@@ -8,10 +8,10 @@
 // https://imagemagick.org/Magick++/tutorial/Magick++_tutorial.pdf
 #include <Magick++.h> 
 
+// #include <WinUser.h>
 
 // this or add Magick:: to everything
 using namespace Magick; 
-
 
 
 
@@ -20,7 +20,7 @@ using namespace Magick;
 // // examples:
 // Geometry g1(100,200);   // numeric constructor
 // Geometry g2(“300x400”); // string constructor
-static int crop_image(std::string input, std::string output, Geometry g)
+int crop_image(std::string input, std::string output, Geometry g)
 {
     // Construct the image object. Seperating image construction from the 
     // the read operation ensures that a failure to read the image file 
@@ -40,16 +40,32 @@ static int crop_image(std::string input, std::string output, Geometry g)
     { 
         std::cout << "Caught exception: " << error_.what() << std::endl; 
     } 
+
+    return 0;
 }
 
-static int crop_image(std::string input, std::string output, int x, int y, int width, int height)
+int crop_image(std::string input, std::string output, int x, int y, int width, int height)
 {
     return crop_image(input, output, Geometry(x, y, width, height));
 }
 
 
 
+void screenshot(std::string output)
+{
+    try 
+    { 
+        Image screen("screenshot:");
 
+        // Write the image to a file 
+        screen.write( output ); 
+    } 
+    catch( Exception &error_ ) 
+    { 
+        std::cout << "Caught exception: " << error_.what() << std::endl; 
+    } 
+
+}
 
 
 
@@ -71,9 +87,11 @@ int main (int    argc, char **argv)
     GtkApplication *app;
     int status;
 
-    crop_image("gawr.jpg", "output.png", 200, 200, 200, 200);
+    screenshot("screenshot.png");
 
-    uwu();
+    // crop_image("gawr.jpg", "output.png", 200, 200, 200, 200);
+
+    // uwu();
 
     app = gtk_application_new ("org.gtk.exampcvle", G_APPLICATION_FLAGS_NONE);
     g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
